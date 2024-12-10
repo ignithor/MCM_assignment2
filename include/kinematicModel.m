@@ -34,12 +34,12 @@ classdef kinematicModel < handle
             z_i = bTi(1:3, 3);  % Z-axis of joint i in base frame
             if self.gm.jointType(i)
                 % Prismatic joint
-                self.J(4:6, i) = z_i;
                 self.J(1:3,i) = [0;0;0];
+                self.J(4:6, i) = z_i;
             elseif ~self.gm.jointType(i)
                 % Rotation joint
-                self.J(4:6, i) = cross(z_i, p_e - p_i);
                 self.J(1:3, i) = z_i;
+                self.J(4:6, i) = cross(z_i, p_e - p_i);
             else
                 error("Joint Type not pismatic or rotation")
             end

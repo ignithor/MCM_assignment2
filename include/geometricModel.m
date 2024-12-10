@@ -43,22 +43,23 @@ classdef geometricModel < handle
             self.iTj = self.iTj_0;
 
             for i=1:self.jointNumber
-                T = eye(4);
                 if self.jointType(i)
+                    % If prismatic joint
                     T= [1,0,0,0;
                         0,1,0,0;
                         0,0,1,q(i);
                         0,0,0,1];
                 elseif ~self.jointType(i)
+                    % If rotational joint
                     cq = cos(q(i));
                     sq = sin(q(i));
-                    T(1:4, 1:4) = [cq, -sq, 0, 0;
-                                    sq, cq, 0, 0;
-                                    0, 0, 1, 0;
-                                    0,0,0,1];
+                    T = [cq, -sq, 0, 0;
+                         sq, cq, 0, 0;
+                          0, 0, 1, 0;
+                         0, 0, 0, 1];
 
                 else
-                    error("Joint Type not rotation or prismastic")
+                    error("Joint type not rotation or prismastic")
                 end
                 self.iTj(:,:,i) = self.iTj_0(:,:,i) * T;
 
@@ -72,7 +73,7 @@ classdef geometricModel < handle
             % bTk : transformation matrix from the manipulator base to the k-th joint in
             % the configuration identified by iTj.
             
-            if k < 1 || k > self.jointNumber
+            if k < 0 || k > self.jointNumber
                 error('Joint index out of range');
             end
             
