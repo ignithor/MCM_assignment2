@@ -27,8 +27,10 @@ disp(bTe)
 
 T35 = geometricModel.getTransformWrtBase(3) \ geometricModel.getTransformWrtBase(5);
 T53 = inv(T35);
+%T53 = inv(geometricModel.iTj(:,:,4)*geometricModel.iTj(:,:,5)); with Q1.2
 disp('5T3')
 disp(T53)
+
 
 %% Given the previous joint configuration compute the Jacobian matrix of the manipulator
 km = kinematicModel(geometricModel);
